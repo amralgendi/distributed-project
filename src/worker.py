@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from mpi4py import MPI
 import threading
+import os
 
 from models.image_processing_task import ImageTask
 from processing import modify_image, split_image
@@ -12,6 +13,9 @@ class WorkerThread(threading.Thread):
         self.task = task
 
     def run(self):
+        if(not os.path.isdir("output_images")):
+            os.mkdir("output_images")
+
         comm = MPI.COMM_WORLD
         rank = comm.Get_rank()
         size = comm.Get_size()
