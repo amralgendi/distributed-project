@@ -21,16 +21,16 @@ class WorkerThread(threading.Thread):
         size = comm.Get_size()
 
         if rank == 0:
-            image_data = split_image(self.task.image_path, size)
+            image_data = split_image(self.task.img_src, size)
         else:
             image_data = None
 
         local_chunk = comm.scatter(image_data, root=0)
 
-        filtered_chunk = modify_image(self.task.operation_type, local_chunk)
+        filtered_chunk = modify_image(self.task.mod_type, local_chunk)
 
         all_filtered_chunks = comm.gather(filtered_chunk, root=0)
 
         if rank == 0:
             filtered_image = np.concatenate(all_filtered_chunks, axis=1)
-            cv2.imwrite(self.task.get_save_path(), filtered_image) 
+            cv2.imwrite(self.task.get_output_path(), filtered_image) 
