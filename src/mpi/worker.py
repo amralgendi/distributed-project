@@ -59,7 +59,7 @@ class WorkerThread(threading.Thread):
             if rank == 1:
                 raise Exception("Example Error")  # Simulate error in node
 
-            filtered_chunk = modify_image(self.task.operation_type, local_chunk)
+            filtered_chunk = modify_image(self.task.mod_type, local_chunk)
 
             if rank != 0:
                 send_to_rmq(Event.NODE_DONE, f"{self.task.id} {rank}")
@@ -71,7 +71,7 @@ class WorkerThread(threading.Thread):
                     send_to_rmq(Event.PROCESSING_FAILED, self.task.id)
                     return
                 filtered_image = np.concatenate(all_filtered_chunks, axis=1)
-                cv2.imwrite(self.task.get_save_path(), filtered_image)
+                cv2.imwrite(self.task.get_output_path(), filtered_image)
                 send_to_rmq(Event.PROCESSING_DONE, f"{self.task.id} {self.task.get_save_path()}")
 
         except Exception as e:
