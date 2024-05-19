@@ -136,6 +136,9 @@ def didRecieveMessage(event: Event, data: str):
     dataSplit = data.split(" ")
     process_id = dataSplit[0]
     print("aaaaaaaa")
+
+    print(dataSplit)
+    print(process_id)
     
     if event == Event.PROCESSING_STARTED:
         num_of_nodes = dataSplit[1]
