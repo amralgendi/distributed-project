@@ -57,6 +57,11 @@
         var downloadLink = data.download_link;
         var contentDiv = document.getElementById("status");
         contentDiv.innerHTML = "PROCESS DONE: " + downloadLink;
+        const img = document.createElement("img");
+
+        img.src = downloadLink;
+
+        document.body.appendChild(img);
       });
     </script>
 
