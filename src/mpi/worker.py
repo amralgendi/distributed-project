@@ -61,8 +61,10 @@ class WorkerThread(threading.Thread):
 
             filtered_chunk = modify_image(self.task.mod_type, local_chunk)
 
+            print("Here!")
             if rank != 0:
                 send_to_rmq(Event.NODE_DONE, f"{self.task.task_id} {rank}")
+            print("There!")
 
             all_filtered_chunks = comm.gather(filtered_chunk, root=0)
 
