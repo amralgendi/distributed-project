@@ -59,7 +59,7 @@
         contentDiv.innerHTML = "PROCESS DONE: " + downloadLink;
         const img = document.createElement("img");
 
-        img.src = downloadLink;
+        img.src = downloadLink.replace("/home/ubuntu/distributed/", "../");
 
         document.body.appendChild(img);
       });
