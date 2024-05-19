@@ -15,6 +15,7 @@ class MPITask(threading.Thread):
         self.op_id = op_id
 
     def run(self):
+        print(self.num_of_nodes)
         result = subprocess.run(['mpiexec', '-n', str(self.num_of_nodes), '-hostfile', '/home/ubuntu/nodefile','python3', "-m", "mpi.worker", self.process_id, self.img_path, self.op_id]) 
         print(result)
 
@@ -30,6 +31,7 @@ class TaskManager():
         with open('/home/ubuntu/host_num', 'r') as file:
             current_value = file.read().strip()
         self.num_of_nodes = int(current_value) or 1
+        print(self.num_of_nodes)
     
     def didRecieveMessage(self, event: Event, data: str):
         if event == Event.ADD_NODE:
