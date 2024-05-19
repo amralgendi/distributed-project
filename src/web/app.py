@@ -213,4 +213,4 @@ def emitUpdateOf(process_id, event, data):
 if __name__ == '__main__':
     rmqReceiver = RMQEventReceiver([Event.PROCESSING_STARTED, Event.PROCESSING_DONE, Event.PROGRESS_UPDATE, Event.PROCESSING_FAILED], didRecieveMessage)
     rmqReceiver.start()
-    socketio.run(app, port=3000)
+    socketio.run(app, port=5000, host="0.0.0.0")
