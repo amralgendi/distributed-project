@@ -72,11 +72,11 @@ class WorkerThread(threading.Thread):
                     return
                 filtered_image = np.concatenate(all_filtered_chunks, axis=1)
                 cv2.imwrite(self.task.get_output_path(), filtered_image)
-                send_to_rmq(Event.PROCESSING_DONE, f"{self.task.id} {self.task.get_save_path()}")
+                send_to_rmq(Event.PROCESSING_DONE, f"{self.task.id} {self.task.get_output_path()}")
 
         except Exception as e:
             print(e)
-            send_to_rmq(Event.NODE_FAILED if rank != 0 else Event.PROCESSING_FAILED, f"{self.task.id} {rank}")
+            send_to_rmq(Event.NODE_FAILED if rank != 0 else Event.PROCESSING_FAILED, f"{self.task.task_id} {rank}")
 
             comm.gather([], root=0)
 
@@ -96,7 +96,7 @@ class WorkerThread(threading.Thread):
         """
         dataSplit = data.split(" ")
         process_id = dataSplit[0]
-        if process_id != self.task.id:
+        if process_id != self.task.task_id:
             return
         
         if event == Event.NODE_FAILED:
