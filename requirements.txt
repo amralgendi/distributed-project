@@ -17,4 +17,4 @@ pyzmq==26.0.3
 simple-websocket==1.0.0
 Werkzeug==3.0.3
 wsproto==1.2.0
-redis=5.0.4
+redis==5.0.4
