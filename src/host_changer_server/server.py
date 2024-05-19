@@ -19,7 +19,7 @@ def add():
         file.write(str(int(current_value) + 1))
     print(f"IP {ip} added to the file.")
 
-    send_to_rmq(Event.ADD_NODE)
+    send_to_rmq(Event.ADD_NODE, "")
 
     return json.dumps({"success": True})
 
@@ -48,7 +48,7 @@ def remove():
 
     print(f"IP {ip} removed from the file.")
 
-    send_to_rmq(Event.REMOVE_NODE)
+    send_to_rmq(Event.REMOVE_NODE, "")
 
     return json.dumps({"success": True})
 
