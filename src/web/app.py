@@ -4,7 +4,7 @@ from flask_socketio import SocketIO
 from flask import Flask, redirect, render_template, request, send_from_directory
 
 from constants import PROCESSED_PATH, UPLOADED_PATH
-from models.image_processing_task import ImageOperation
+from models.image_processing_task import ImageModification
 from models.events import Event
 from redis_access.redis_access import ProcessState, get_from_redis, set_to_redis
 from rmq.rmq_receiver import RMQEventReceiver
@@ -134,7 +134,7 @@ def didRecieveMessage(event: Event, data: str):
         op_id = dataSplit[2]
         img_path_split = dataSplit[3].split("/")
         file_name = img_path_split[len(img_path_split)-1]
-        set_to_redis(process_id, state=ProcessState.STARTED, num_of_nodes=num_of_nodes, operation=ImageOperation(int(op_id)), uploaded_file_name=file_name)
+        set_to_redis(process_id, state=ProcessState.STARTED, num_of_nodes=num_of_nodes, operation=ImageModification(int(op_id)), uploaded_file_name=file_name)
 
     elif event == Event.PROGRESS_UPDATE:
         current_state = get_from_redis(process_id)
