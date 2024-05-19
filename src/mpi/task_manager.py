@@ -15,7 +15,7 @@ class MPITask(threading.Thread):
         self.op_id = op_id
 
     def run(self):
-        result = subprocess.run(['mpiexec', '-n', str(self.num_of_nodes), '-hostfile', '~/nodefile','python3', "-m", "mpi.worker", self.process_id, self.img_path, self.op_id]) 
+        result = subprocess.run(['mpiexec', '-n', str(self.num_of_nodes), '-hostfile', '/home/ubuntu/nodefile','python3', "-m", "mpi.worker", self.process_id, self.img_path, self.op_id]) 
         print(result)
 
         del self
