@@ -58,8 +58,8 @@ class WorkerThread(threading.Thread):
 
             time.sleep(random.randint(3, 10))  # Simulate processing delay
 
-            if rank == 1:
-                raise Exception("Example Error")  # Simulate error in node
+            # if rank == 1:
+            #     raise Exception("Example Error")  # Simulate error in node
 
             filtered_chunk = modify_image(self.task.mod_type, local_chunk)
 
