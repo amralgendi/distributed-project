@@ -5,7 +5,7 @@ import threading
 import os
 
 from models.image_processing_task import ImageTask
-from processing import modify_image, split_image
+from mpi.processing import modify_image, split_image
 
 class WorkerThread(threading.Thread):
     def __init__(self, task: ImageTask):
