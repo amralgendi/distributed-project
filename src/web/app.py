@@ -2,7 +2,7 @@
 import uuid
 from flask_socketio import SocketIO
 from flask import Flask, redirect, render_template, request, send_from_directory
-
+import os
 from constants import PROCESSED_PATH, UPLOADED_PATH
 from models.image_processing_task import ImageModification
 from models.events import Event
@@ -15,6 +15,12 @@ socketio = SocketIO(app)
 
 # Dictionary to store client rooms
 client_rooms = {}
+
+if not os.path.exists(UPLOADED_PATH):
+    os.makedirs(UPLOADED_PATH)
+
+if not os.path.exists(PROCESSED_PATH):
+    os.makedirs(PROCESSED_PATH)
 
 @app.route('/')
 def index():
