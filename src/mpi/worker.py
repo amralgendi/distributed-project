@@ -103,7 +103,7 @@ class WorkerThread(threading.Thread):
             self.didFail = True
         elif event == Event.NODE_DONE:
             self.num_of_nodes_done += 1
-            send_to_rmq(Event.PROGRESS_UPDATE, f"{self.task.id} {self.num_of_nodes_done} {self.size}")
+            send_to_rmq(Event.PROGRESS_UPDATE, f"{self.task.task_id} {self.num_of_nodes_done} {self.size}")
 
 def main():
     """
