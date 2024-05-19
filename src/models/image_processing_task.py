@@ -17,4 +17,4 @@ class ImageTask:
     
     def get_output_path(self):
         # Derive a path for saving processed images
-        return PROCESSED_PATH + self.id + ".png"
+        return PROCESSED_PATH + self.task_id + ".png"

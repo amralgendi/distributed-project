@@ -1,66 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socket.IO Client</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <script>
-        var socket = io();
+      var socket = io();
 
-        // Specify the client ID when connecting
-        var processes_ids = window.location.pathname.split('/').pop(); // Extract the last part of the URL path
-        var idsArry = processes_ids.split(",")
-        socket.on('connect', function () {
-            socket.emit('track', idsArry);
-        });
+      // Specify the client ID when connecting
+      var processes_ids = window.location.pathname.split("/").pop(); // Extract the last part of the URL path
+      var idsArry = processes_ids.split(",");
+      socket.on("connect", function () {
+        socket.emit("track", idsArry);
+      });
 
-        var finished_processing = false;
+      var finished_processing = false;
 
-        socket.on('process_started', function (data) {
-            if (finished_processing) { return }
-            // TODO: - Handle progress visually 
-            let process_id = data.id;
-            let num_of_nodes = data.num_of_nodes;
-            var contentDiv = document.getElementById('status');
-            contentDiv.innerHTML = 'Started with ' + num_of_nodes + ' nodes.';
-        });
+      socket.on("process_started", function (data) {
+        if (finished_processing) {
+          return;
+        }
+        // TODO: - Handle progress visually
+        let process_id = data.id;
+        let num_of_nodes = data.num_of_nodes;
+        var contentDiv = document.getElementById("status");
+        contentDiv.innerHTML = "Started with " + num_of_nodes + " nodes.";
+      });
 
-        socket.on('progress_update', function (data) {
-            if (finished_processing) { return }
-            // TODO: - Handle progress visually 
-            let progress = data.progress;
-            let process_id = data.id;
-            var contentDiv = document.getElementById('status');
-            contentDiv.innerHTML = 'Progress: ' + progress;
-        });
+      socket.on("progress_update", function (data) {
+        if (finished_processing) {
+          return;
+        }
+        // TODO: - Handle progress visually
+        let progress = data.progress;
+        let process_id = data.id;
+        var contentDiv = document.getElementById("status");
+        contentDiv.innerHTML = "Progress: " + progress;
+      });
 
-        socket.on('process_failed', function (data) {
-            finished_processing = true;
-            let process_id = data.id;
-            // TODO: - Handle process faliure here 
-            var contentDiv = document.getElementById('status');
-            contentDiv.innerHTML = 'PROCESSING FAILED';
-        });
+      socket.on("process_failed", function (data) {
+        finished_processing = true;
+        let process_id = data.id;
+        // TODO: - Handle process faliure here
+        var contentDiv = document.getElementById("status");
+        contentDiv.innerHTML = "PROCESSING FAILED";
+      });
 
-        socket.on('process_done', function (data) {
-            finished_processing = true;
-            let process_id = data.id;
-            // TODO: - Handle process faliure here 
-            var downloadLink = data.download_link;
-            var contentDiv = document.getElementById('status');
-            contentDiv.innerHTML = 'PROCESS DONE: ' + downloadLink;
-        });
+      socket.on("process_done", function (data) {
+        finished_processing = true;
+        let process_id = data.id;
+        // TODO: - Handle process faliure here
+        var downloadLink = data.download_link;
+        var contentDiv = document.getElementById("status");
+        contentDiv.innerHTML = "PROCESS DONE: " + downloadLink;
+      });
     </script>
 
-    <div id="status">
-        Progress: 0%
-    </div>
-
-</body>
-
+    <div id="status">Progress: 0%</div>
+  </body>
 </html>

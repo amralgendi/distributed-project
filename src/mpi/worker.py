@@ -62,17 +62,17 @@ class WorkerThread(threading.Thread):
             filtered_chunk = modify_image(self.task.mod_type, local_chunk)
 
             if rank != 0:
-                send_to_rmq(Event.NODE_DONE, f"{self.task.id} {rank}")
+                send_to_rmq(Event.NODE_DONE, f"{self.task.task_id} {rank}")
 
             all_filtered_chunks = comm.gather(filtered_chunk, root=0)
 
             if rank == 0:
                 if self.didFail:
-                    send_to_rmq(Event.PROCESSING_FAILED, self.task.id)
+                    send_to_rmq(Event.PROCESSING_FAILED, self.task.task_id)
                     return
                 filtered_image = np.concatenate(all_filtered_chunks, axis=1)
                 cv2.imwrite(self.task.get_output_path(), filtered_image)
-                send_to_rmq(Event.PROCESSING_DONE, f"{self.task.id} {self.task.get_output_path()}")
+                send_to_rmq(Event.PROCESSING_DONE, f"{self.task.task_id} {self.task.get_output_path()}")
 
         except Exception as e:
             print(e)
