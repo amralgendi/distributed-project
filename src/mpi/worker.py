@@ -113,6 +113,7 @@ def main():
     """
     Main function to parse arguments and initiate the image processing task.
     """
+    print("INSIDE MAIN!!!")
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('process_id', type=str, help='The process ID')
     parser.add_argument('img_path', type=str, help='The image path')
