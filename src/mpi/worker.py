@@ -44,6 +44,8 @@ class WorkerThread(threading.Thread):
         rank = comm.Get_rank()
         self.size = comm.Get_size()
 
+        print("RUNNING THREAD")
+
         try:
             if rank == 0:
                 self.zmqReceiver = RMQEventReceiver([Event.NODE_FAILED, Event.NODE_DONE], self.didRecieveMessage)
